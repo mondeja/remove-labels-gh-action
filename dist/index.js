@@ -38,7 +38,7 @@ const run = async function() {
 
     client.issues.removeLabel({
       ...github.context.repo,
-      issue_number: issue_number,
+      issue_number: issueOrPullNumber,
       name: labelName,
     }).then((response) => {
       if (response.status === 200) {
