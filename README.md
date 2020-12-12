@@ -9,7 +9,7 @@ If the issue or pull request does not contains the label/s, it does nothing.
 - **token**: Github token.
 - **labels**: Label as string or array of labels to remove.
 
-## Example usage
+## Usage
 
 ```yaml
 name: Remove labels after pull request merge
@@ -24,7 +24,7 @@ jobs:
     name: Remove labels
     steps:
       - name: removelabel
-        uses: mondejs/remove-labels@v1
+        uses: mondeja/remove-labels-gh-action@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           labels: 
