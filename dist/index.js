@@ -13,9 +13,9 @@ const run = async function() {
   const githubToken = core.getInput("token");
   const client = new github.GitHub(githubToken);
 
-  const labelsInput = core.getInput("labels");
-  let labelsToRemove = typeof labelsInput === "string" ?
-    [labelsInput] : labelsInput;
+  let labelsToRemove = core.getInput("labels")
+                           .split("\n")
+                           .filter(line => line);
 
   const isIssue = payload.hasOwnProperty("issue");
   const issueOrPullNumber = payload[isIssue ? "issue" : "pull_request"].number;

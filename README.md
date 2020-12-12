@@ -7,7 +7,7 @@ If the issue or pull request does not contains the label/s, it does nothing.
 ## Inputs
 
 - **token**: Github token.
-- **labels**: Label as string or array of labels to remove.
+- **labels**: Labels to remove.
 
 ## Usage
 
@@ -18,22 +18,22 @@ on:
     types:
       - closed
 jobs:
-  remove_label:
+  remove-label:
     if: github.event.pull_request.merged == 'true'
     runs-on: ubuntu-latest
-    name: Remove labels
+    name: Remove labelsW
     steps:
       - name: removelabel
         uses: mondeja/remove-labels-gh-action@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          labels: 
-            - awaiting reply
-            - changes requested
-            - duplicate
-            - in discussion
-            - invalid
-            - out of scope
-            - pending
-            - won't add
+          labels: |
+            awaiting reply
+            changes requested
+            duplicate
+            in discussion
+            invalid
+            out of scope
+            pending
+            won't add
 ```
