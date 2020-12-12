@@ -1,6 +1,6 @@
 {
   "name": "remove-labels-gh-action",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Remove labels from pull requests and issues.",
   "main": "index.js",
   "scripts": {
