@@ -1,0 +1,20 @@
+{
+  "name": "remove-labels-gh-action",
+  "version": "0.0.1",
+  "description": "Remove labels from pull requests and issues.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "github-actions",
+    "ci",
+    "labels"
+  ],
+  "author": "Álvaro Mondéjar",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "@actions/core": "^1.2.6",
+    "@actions/github": "^4.0.0"
+  }
+}

@@ -1,0 +1,17 @@
+name: 'Remove labels'
+description: 'Remove pull requests labels'
+branding:
+  icon: 'edit'
+  color: 'yellow'
+inputs:
+  token:
+    description: 'Github token'
+    required: true
+    default: ''
+  labels:
+    description: 'Labels to remove'
+    required: true
+    default: ''
+runs:
+  using: 'node12'
+  main: 'dist/index.js'
