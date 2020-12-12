@@ -19,9 +19,9 @@ on:
       - closed
 jobs:
   remove-label:
-    if: github.event.pull_request.merged == 'true'
+    if: github.event.pull_request.merged
     runs-on: ubuntu-latest
-    name: Remove labelsW
+    name: Remove labels
     steps:
       - name: removelabel
         uses: mondeja/remove-labels-gh-action@v1
