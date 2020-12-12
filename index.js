@@ -29,7 +29,7 @@ const run = async function() {
     console.debug(foundLabelMessage);
     core.info(foundLabelMessage);
 
-    octokit.issues.removeLabel({
+    client.issues.removeLabel({
       ...github.context.repo,
       issue_number: issue_number,
       name: labelName,
