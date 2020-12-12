@@ -11,10 +11,11 @@ const github = __webpack_require__(438);
 const run = async function() {
   const payload = github.context.payload;
   const githubToken = core.getInput("token");
-  const client = new github.GitHub(githubToken);
+  const client = new github.getOctokit(githubToken);
 
   let labelsToRemove = core.getInput("labels")
                            .split("\n")
+                           .map(line => line.trim())
                            .filter(line => line);
 
   const isIssue = payload.hasOwnProperty("issue");
