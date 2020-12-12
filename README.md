@@ -18,7 +18,8 @@ on:
     types:
       - closed
 jobs:
-  remove-label:
+  remove-labels:
+    name: Remove outdated labels
     if: github.event.pull_request.merged
     runs-on: ubuntu-latest
     name: Remove labels

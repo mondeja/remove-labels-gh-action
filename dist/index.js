@@ -33,7 +33,6 @@ const run = async function() {
     const foundLabelMessage = `Found label "${labelName}" in`
                             + ` ${isIssue ? "issue" : "pull request"}`
                             + ` #${issueOrPullNumber}.`;
-    console.debug(foundLabelMessage);
     core.info(foundLabelMessage);
 
     client.issues.removeLabel({
@@ -46,20 +45,17 @@ const run = async function() {
                              + ` removed from`
                              + ` ${isIssue ? "issue" : "pull request"}`
                              + ` #${issueOrPullNumber}.`
-        console.log(successMessage);
         core.info(foundLabelMessage);
       } else {
         const warningMessage = `\u001b[93mUnexpected response status code`
                            + ` "${response.status}" in remove label request`
                            + ` response. DETAILS:\n${response}`
-        console.warn(warningMessage);
         core.warning(warningMessage);
       }
     }).catch((err) => {
       const errorMessage = `\u001b[91mError removing label "${labelName}"`
                          + ` from ${isIssue ? "issue" : "pull request"}`
                          + ` #${issueOrPullNumber}: ${err.message}`;
-      console.error(errorMessage);
       core.setFailed(errorMessage);
     });
   });
