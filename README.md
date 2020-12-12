@@ -58,8 +58,6 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           labels: |
-            awaiting reply
-            changes requested
             in discussion
             pending
 ```
