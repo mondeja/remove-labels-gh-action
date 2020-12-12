@@ -26,8 +26,7 @@ jobs:
     if: github.event.pull_request.merged
     runs-on: ubuntu-latest
     steps:
-      - name: removelabel
-        uses: mondeja/remove-labels-gh-action@v1
+      - uses: mondeja/remove-labels-gh-action@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           labels: |
@@ -40,13 +39,22 @@ jobs:
             pending
             won't add
 
+  remove-closed-pr-labels:
+    name: Remove closed pull request labels
+    if: (! github.event.pull_request.merged)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: mondeja/remove-labels-gh-action@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          labels: in discussion
+
   remove-closed-issue-labels:
     name: Remove closed issue labels
     if: github.event.issue.state == 'closed'
     runs-on: ubuntu-latest
     steps:
-      - name: removelabel
-        uses: mondeja/remove-labels-gh-action@v1
+      - uses: mondeja/remove-labels-gh-action@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           labels: |
