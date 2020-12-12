@@ -10,8 +10,8 @@ const github = __webpack_require__(438);
 
 const run = async function() {
   const payload = github.context.payload;
-  const githubToken = core.getInput("token");
-  const client = new github.getOctokit(githubToken);
+  const token = core.getInput("token");
+  const client = new github.getOctokit(token);
 
   let labelsToRemove = core.getInput("labels")
                            .split("\n")
@@ -44,12 +44,12 @@ const run = async function() {
         const successMessage = `\u001b[92mLabel "${labelName}" successfully`
                              + ` removed from`
                              + ` ${isIssue ? "issue" : "pull request"}`
-                             + ` #${issueOrPullNumber}.`
-        core.info(foundLabelMessage);
+                             + ` #${issueOrPullNumber}.`;
+        core.info(successMessage);
       } else {
         const warningMessage = `\u001b[93mUnexpected response status code`
                            + ` "${response.status}" in remove label request`
-                           + ` response. DETAILS:\n${response}`
+                           + ` response. DETAILS:\n${response}`;
         core.warning(warningMessage);
       }
     }).catch((err) => {
