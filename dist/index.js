@@ -8,31 +8,50 @@ module.exports =
 const core = __webpack_require__(186);
 const github = __webpack_require__(438);
 
+const multilineStringToArray = (value) => {
+  console.log(value);
+  return value.split("\n")
+              .map(line => line.trim())
+              .filter(line => line)
+              .sort();
+}
+
+const getLabelsToRemove = () => {
+  return multilineStringToArray(core.getInput("labels"));
+}
+
 const run = async function() {
   const payload = github.context.payload;
   const token = core.getInput("token");
   const client = new github.getOctokit(token);
 
-  let labelsToRemove = core.getInput("labels")
-                           .split("\n")
-                           .map(line => line.trim())
-                           .filter(line => line);
+  const labelsToRemove = getLabelsToRemove();
 
-  const isIssue = payload.hasOwnProperty("issue");
-  const issueOrPullNumber = payload[isIssue ? "issue" : "pull_request"].number;
+  const isIssue = Object.prototype.hasOwnProperty.call(payload, "issue");
+  const issueOrPullNumber = payload[isIssue ? "issue" : "pull_request"].number,
+        issueOrPullReadable = isIssue ? "issue" : "pull request";
 
-  const {data: labelsData} = await client.issues.listLabelsOnIssue({
-    ...github.context.repo,
-    issue_number: issueOrPullNumber
-  });
+  try {
+    const {data: labelsData} = await client.issues.listLabelsOnIssue({
+      ...github.context.repo,
+      issue_number: issueOrPullNumber
+    });
+  } catch (err) {
+    const errorMessage = `\u001b[91mError listing labels`
+                       + ` of ${issueOrPullReadable} #${issueOrPullNumber}:`
+                       + ` ${err.message}`;
+    core.setFailed(errorMessage);
+    process.exit(1)
+  }
 
-  labelsData.map(l => l.name).forEach((labelName) => {
-    if (!labelsToRemove.includes(labelName)) {
-      return;
-    }
+  const filteredLabelsToRemove =
+    labelsData.map(l => l.name)
+              .filter(labelName => labelsToRemove.includes(labelName))
+              .sort();
+
+  filteredLabelsToRemove.forEach((labelName) => {
     const foundLabelMessage = `Found label "${labelName}" in`
-                            + ` ${isIssue ? "issue" : "pull request"}`
-                            + ` #${issueOrPullNumber}.`;
+                            + ` ${issueOrPullReadable} #${issueOrPullNumber}.`;
     core.info(foundLabelMessage);
 
     client.issues.removeLabel({
@@ -42,8 +61,7 @@ const run = async function() {
     }).then((response) => {
       if (response.status === 200) {
         const successMessage = `\u001b[92mLabel "${labelName}" successfully`
-                             + ` removed from`
-                             + ` ${isIssue ? "issue" : "pull request"}`
+                             + ` removed from ${issueOrPullReadable}`
                              + ` #${issueOrPullNumber}.`;
         core.info(successMessage);
       } else {
@@ -54,14 +72,21 @@ const run = async function() {
       }
     }).catch((err) => {
       const errorMessage = `\u001b[91mError removing label "${labelName}"`
-                         + ` from ${isIssue ? "issue" : "pull request"}`
+                         + ` from ${issueOrPullReadable}`
                          + ` #${issueOrPullNumber}: ${err.message}`;
       core.setFailed(errorMessage);
     });
   });
 }
 
-module.exports = run();
+if (require.main === require.cache[eval('__filename')]) {
+    run();
+}
+
+module.exports = {
+  getLabelsToRemove,
+  run
+}
 
 
 /***/ }),

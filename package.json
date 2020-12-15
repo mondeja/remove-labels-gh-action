@@ -4,20 +4,31 @@
   "description": "Remove labels from pull requests and issues.",
   "main": "index.js",
   "scripts": {
-    "build": "ncc build index.js --license licenses.txt"
+    "build": "ncc build index.js --license licenses.txt",
+    "coveralls": "cat ./tests/coverage/lcov.info | coveralls",
+    "lint": "node_modules/.bin/eslint index.js tests",
+    "lintfix": "npm run lint -- --fix",
+    "pre:publish": "node_modules/.bin/run-s lint build",
+    "test": "node_modules/.bin/jest"
   },
   "keywords": [
     "github-actions",
     "ci",
     "labels"
   ],
-  "author": "Álvaro Mondéjar",
+  "author": "Álvaro Mondéjar <mondejar1994@gmail.com>",
   "license": "GPL-3.0",
   "dependencies": {
-    "@actions/core": "^1.2.6",
-    "@actions/github": "^4.0.0"
+    "@actions/core": "1.2.6",
+    "@actions/github": "4.0.0"
   },
   "devDependencies": {
-    "@vercel/ncc": "^0.25.1"
+    "@vercel/ncc": "0.25.1",
+    "coveralls": "3.1.0",
+    "jest": "26.6.3"
+  },
+  "jest": {
+    "collectCoverage": true,
+    "coverageDirectory": "<rootDir>/tests/coverage"
   }
 }
