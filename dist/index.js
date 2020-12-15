@@ -9,7 +9,6 @@ const core = __webpack_require__(186);
 const github = __webpack_require__(438);
 
 const multilineStringToArray = (value) => {
-  console.log(value);
   return value.split("\n")
               .map(line => line.trim())
               .filter(line => line)
@@ -31,18 +30,10 @@ const run = async function() {
   const issueOrPullNumber = payload[isIssue ? "issue" : "pull_request"].number,
         issueOrPullReadable = isIssue ? "issue" : "pull request";
 
-  try {
-    const {data: labelsData} = await client.issues.listLabelsOnIssue({
-      ...github.context.repo,
-      issue_number: issueOrPullNumber
-    });
-  } catch (err) {
-    const errorMessage = `\u001b[91mError listing labels`
-                       + ` of ${issueOrPullReadable} #${issueOrPullNumber}:`
-                       + ` ${err.message}`;
-    core.setFailed(errorMessage);
-    process.exit(1)
-  }
+  const {data: labelsData} = await client.issues.listLabelsOnIssue({
+    ...github.context.repo,
+    issue_number: issueOrPullNumber
+  });
 
   const filteredLabelsToRemove =
     labelsData.map(l => l.name)

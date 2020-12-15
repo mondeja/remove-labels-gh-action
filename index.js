@@ -23,18 +23,10 @@ const run = async function() {
   const issueOrPullNumber = payload[isIssue ? "issue" : "pull_request"].number,
         issueOrPullReadable = isIssue ? "issue" : "pull request";
 
-  try {
-    const {data: labelsData} = await client.issues.listLabelsOnIssue({
-      ...github.context.repo,
-      issue_number: issueOrPullNumber
-    });
-  } catch (err) {
-    const errorMessage = `\u001b[91mError listing labels`
-                       + ` of ${issueOrPullReadable} #${issueOrPullNumber}:`
-                       + ` ${err.message}`;
-    core.setFailed(errorMessage);
-    process.exit(1)
-  }
+  const {data: labelsData} = await client.issues.listLabelsOnIssue({
+    ...github.context.repo,
+    issue_number: issueOrPullNumber
+  });
 
   const filteredLabelsToRemove =
     labelsData.map(l => l.name)
