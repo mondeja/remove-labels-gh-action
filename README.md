@@ -14,7 +14,8 @@ If the issue or pull request does not contains the label/s, it does nothing.
 ```yaml
 name: Remove outdated labels
 on:
-  pull_request:
+  # https://github.community/t/github-actions-are-severely-limited-on-prs/18179/15
+  pull_request_target:
     types:
       - closed
   issues:
@@ -41,7 +42,7 @@ jobs:
 
   remove-closed-pr-labels:
     name: Remove closed pull request labels
-    if: github.event_name == 'pull_request' && (! github.event.pull_request.merged)
+    if: github.event_name == 'pull_request_target' && (! github.event.pull_request.merged)
     runs-on: ubuntu-latest
     steps:
       - uses: mondeja/remove-labels-gh-action@v1
