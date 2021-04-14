@@ -19,7 +19,7 @@
   "author": "Álvaro Mondéjar <mondejar1994@gmail.com>",
   "license": "GPL-3.0",
   "dependencies": {
-    "@actions/core": "1.2.6",
+    "@actions/core": "1.2.7",
     "@actions/github": "4.0.0"
   },
   "devDependencies": {
