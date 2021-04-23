@@ -1,4 +1,4 @@
-name: Update copyright years in license file
+name: Update copyright years
 
 on:
   schedule:
