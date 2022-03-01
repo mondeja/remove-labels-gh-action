@@ -1,6 +1,6 @@
 {
   "name": "remove-labels-gh-action",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Remove labels from pull requests and issues.",
   "main": "index.js",
   "scripts": {
@@ -19,13 +19,14 @@
   "author": "Álvaro Mondéjar <mondejar1994@gmail.com>",
   "license": "BSD-3-Clause",
   "dependencies": {
-    "@actions/core": "1.4.0",
+    "@actions/core": "1.6.0",
     "@actions/github": "5.0.0"
   },
   "devDependencies": {
-    "@vercel/ncc": "0.28.6",
+    "@vercel/ncc": "0.33.3",
     "coveralls": "3.1.1",
-    "jest": "27.0.6"
+    "eslint": "8.10.0",
+    "jest": "27.5.1"
   },
   "jest": {
     "collectCoverage": true,
