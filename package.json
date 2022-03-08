@@ -9,7 +9,8 @@
     "lint": "node_modules/.bin/eslint index.js tests",
     "lintfix": "npm run lint -- --fix",
     "pre:publish": "node_modules/.bin/run-s lint build",
-    "test": "node_modules/.bin/jest"
+    "test": "node_modules/.bin/jest",
+    "prepare": "is-ci || husky install"
   },
   "keywords": [
     "github-actions",
@@ -26,6 +27,8 @@
     "@vercel/ncc": "0.33.3",
     "coveralls": "3.1.1",
     "eslint": "8.10.0",
+    "husky": "7.0.4",
+    "is-ci": "3.0.1",
     "jest": "27.5.1"
   },
   "jest": {
