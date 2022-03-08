@@ -23,7 +23,7 @@ const run = async function() {
   const issueOrPullNumber = payload[isIssue ? "issue" : "pull_request"].number,
         issueOrPullReadable = isIssue ? "issue" : "pull request";
 
-  const {data: labelsData} = await client.issues.listLabelsOnIssue({
+  const {data: labelsData} = await client.rest.issues.listLabelsOnIssue({
     ...github.context.repo,
     issue_number: issueOrPullNumber
   });
@@ -38,7 +38,7 @@ const run = async function() {
                             + ` ${issueOrPullReadable} #${issueOrPullNumber}.`;
     core.info(foundLabelMessage);
 
-    client.issues.removeLabel({
+    client.rest.issues.removeLabel({
       ...github.context.repo,
       issue_number: issueOrPullNumber,
       name: labelName,
