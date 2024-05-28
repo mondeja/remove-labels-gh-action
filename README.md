@@ -1,7 +1,6 @@
 # Remove labels GitHub action
 
-Remove labels from pull requests and issues. This action should be kept simple,
-used, for example, to remove a `requested changes` label when a pull is merged.
+Remove labels from pull requests and issues.
 If the issue or pull request does not contains the label/s, it does nothing.
 
 ## Inputs
