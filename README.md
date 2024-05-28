@@ -1,7 +1,6 @@
-# Remove labels Github action
+# Remove labels GitHub action
 
-Remove labels from pull requests and issues. This action should be kept simple,
-used, for example, to remove a `requested changes` label when a pull is merged.
+Remove labels from pull requests and issues.
 If the issue or pull request does not contains the label/s, it does nothing.
 
 ## Inputs
@@ -13,14 +12,19 @@ If the issue or pull request does not contains the label/s, it does nothing.
 
 ```yaml
 name: Remove outdated labels
+
 on:
-  # https://github.community/t/github-actions-are-severely-limited-on-prs/18179/15
-  pull_request_target:
+  pull_request:
     types:
       - closed
   issues:
     types:
       - closed
+
+permissions:
+  issues: write
+  pull-requests: write
+
 jobs:
   remove-merged-pr-labels:
     name: Remove merged pull request labels
@@ -42,7 +46,7 @@ jobs:
 
   remove-closed-pr-labels:
     name: Remove closed pull request labels
-    if: github.event_name == 'pull_request_target' && (! github.event.pull_request.merged)
+    if: github.event_name == 'pull_request' && (! github.event.pull_request.merged)
     runs-on: ubuntu-latest
     steps:
       - uses: mondeja/remove-labels-gh-action@v2
